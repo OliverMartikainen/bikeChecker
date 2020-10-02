@@ -1,0 +1,25 @@
+{
+  "name": "bike_checker_server",
+  "version": "0.0.1",
+  "description": "HSL Citybike availability checker",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index.js",
+    "watch": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../front/ && npm run build --prod && cp -r build ../back/"
+  },
+  "author": "Oliver Martikainen",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "eslint": "^7.10.0",
+    "nodemon": "^2.0.4"
+  }
+}
