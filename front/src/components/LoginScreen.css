@@ -1,0 +1,20 @@
+#login-screen {
+    /*background-color: rgba(192, 192, 192, 0.897);*/
+    font-weight: 600;
+    margin-left: 10px;
+    color: white
+}
+
+button {
+    border-radius: 20px;
+    background-color: rgb(66, 66, 66);
+    color: white;
+    width: 85px;
+    height: 6vh;
+}
+
+input {
+    background-color: rgba(255, 255, 255, 0.63);
+    border-radius: 10px;
+    border-style: solid;
+}
