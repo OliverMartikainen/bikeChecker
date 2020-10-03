@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
-function App() {
+import StationList from './components/StationList'
+
+const getStoredStationCenter = () => {
+  try {
+    const storedStation = window.localStorage.getItem('centerStation')
+    if(storedStation) return JSON.parse(storedStation) 
+    return undefined
+  } catch (error) {
+    return undefined
+  }
+}
+
+
+const App = () => {
+  const [center, setCenter] = useState(() => getStoredStationCenter())
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>HELLO WORLD</h1>
+      <br></br>
+      <StationList center={center} setCenter={setCenter} />
     </div>
-  );
+  )
 }
 
 export default App;
