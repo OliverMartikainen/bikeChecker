@@ -16,6 +16,9 @@ app.use(middleware.tokenExtractor)
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
 
+app.get('/', (req, res) => {
+    res.send('<h1>Hello World!</h1>')
+})
 
 app.use('/api/bikeData', bikeDataRouter)
 
