@@ -1,0 +1,17 @@
+POST https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query {
+  bikeRentalStations {
+    name
+    stationId
+    bikesAvailable
+    spacesAvailable
+    realtime
+    lat
+    lon
+    allowDropoff
+  }
+}
+
