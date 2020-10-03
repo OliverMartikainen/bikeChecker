@@ -1,7 +1,7 @@
 import config from 'utils/config'
 import axios from 'axios'
 
-const URI = `${config.LOGIN_API_URI}/api/user`
+const URI = `${config.LOGIN_API_URI}/api/users`
 
 let TOKEN = ''
 
@@ -10,7 +10,7 @@ const login = async (username, password) => {
     try {
         const response = await axios.post(URI, { username, password })
     
-        if(response.status !== 200 || !response.data || !response.data.token) {
+        if(response.status !== 200 || !response.data ) {
             console.log('LOGIN: FAILED', response.status)
             return false
         }

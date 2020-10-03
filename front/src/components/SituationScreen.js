@@ -33,9 +33,9 @@ const distanceCalc = (point1, point2) => {
 
 
 const updateBikeData = async (setBikeData) => {
+    console.log('a')
     const bikeData = await bikeDataService.getBikeData()
     if (!bikeData || bikeData.lastFetchTime === 0 || bikeData.stations.length === 0) {
-        console.log('NO DATA')
         return
     }
     const { lastFetchTime, stations } = bikeData
@@ -65,30 +65,21 @@ const SituationScreen = () => {
 
     useEffect(() => {
         updateBikeData(setBikeData)
+        const updateTicker = setInterval(() => {
+            updateBikeData(setBikeData)
+        }, 10 * 1000)
+        return () => {console.log('ceä'); clearTimeout(updateTicker)}
     }, [])
 
-    const onFilterChange = (event) => setNameCriteria(event.target.value)
-
-    const selectCenter = (station) => {
-        window.localStorage.setItem('centerStation', JSON.stringify(station))
-        setCenter(station)
-    }
-
-    const nameCriteriaLower = nameCriteria.toLowerCase()
-    const filteredStations = stations.filter(s => s.name.toLowerCase().includes(nameCriteriaLower))
-    const tableSatitons = filteredStations.map(s => <StationItem
-        key={s.stationId}
-        station={s}
-        selectCenter={selectCenter}
-    />)
 
     return (
         <div id='station-screen'>
-
+            {center.name}
+            <br></br>
 
             <button onClick={() => setShowStationList(state => !state)}>CHANGE STATION</button>
             <br></br>
-            { showStationList && <StationList />}
+            { showStationList && <StationList center={center} setCenter={setCenter} stations={stations} />}
 
         </div >
     )

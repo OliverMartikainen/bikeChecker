@@ -102,18 +102,8 @@ const CenterSation = ({ center = { name: 'NO CENTER SELECTED', bikesAvailable: 0
     )
 }
 
-const StationList = ({ center, setCenter }) => {
-    const [bikeData, setBikeData] = useState({ lastFetchTime: 0, stations: [] })
+const StationList = ({ center, setCenter, stations }) => {
     const [nameCriteria, setNameCriteria] = useState('')
-
-    /**
-     * @type { { lastFetchTime: Number, stations: Array<bikeStation> } }
-     */
-    const { lastFetchTime, stations } = bikeData
-
-    useEffect(() => {
-        updateBikeData(setBikeData)
-    }, [])
 
     const onFilterChange = (event) => setNameCriteria(event.target.value)
 
