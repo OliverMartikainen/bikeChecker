@@ -8,6 +8,7 @@
 .station-list-item > td {
     pointer-events: visible;
     border-top: 2px rgba(255, 255, 255, 0.432) solid;
+    cursor: pointer;
 }
 
 .station-list-item.center {
