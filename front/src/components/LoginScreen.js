@@ -19,6 +19,7 @@ const LoginScreen = ({ setUser }) => {
         }
         const success = await userService.login(username, password)
         if (success) {
+            window.localStorage.setItem('storedUser', username)
             setUser(username)
         } else {
             console.log('LOGIN FAILED')

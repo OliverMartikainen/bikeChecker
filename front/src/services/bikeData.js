@@ -27,7 +27,6 @@ const getBikeData = async () => {
     const timeNow = new Date().valueOf()
     const minuteInMsec = 60 * 1000
     if(LAST_FETCH_TIME > timeNow - minuteInMsec) {
-        console.log('BIKEDATA: TOO SOON TO DO NEW FETCH')
         return null
     }
 

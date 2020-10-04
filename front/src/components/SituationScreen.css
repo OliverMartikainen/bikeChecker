@@ -1,0 +1,27 @@
+#center-screen {
+    background-color: rgb(153, 153, 153);
+    width: 100%;
+    text-align: left;
+    border-radius: 10px;
+}
+
+#center-table {
+    width: 100%;
+    font-size: large;
+    
+    border-radius: 10px;
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.good {
+    background-color: green;
+}
+
+.neutral {
+    background-color: rgb(209, 255, 2);
+}
+
+.bad {
+    background-color: rgb(255, 104, 104);
+}

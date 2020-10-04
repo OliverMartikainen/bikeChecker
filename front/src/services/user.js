@@ -10,7 +10,7 @@ const login = async (username, password) => {
     try {
         const response = await axios.post(URI, { username, password })
     
-        if(response.status !== 200 || !response.data ) {
+        if(response.status !== 201 || !response.data ) {
             console.log('LOGIN: FAILED', response.status)
             return false
         }

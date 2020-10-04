@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import bikeDataService from 'services/bikeData'
 import StationList from './StationList'
+import './SituationScreen.css'
 
 /**
  * @typedef {import('services/bikeData').bikeStation } bikeStation
@@ -33,7 +34,6 @@ const distanceCalc = (point1, point2) => {
 
 
 const updateBikeData = async (setBikeData) => {
-    console.log('a')
     const bikeData = await bikeDataService.getBikeData()
     if (!bikeData || bikeData.lastFetchTime === 0 || bikeData.stations.length === 0) {
         return
@@ -44,19 +44,66 @@ const updateBikeData = async (setBikeData) => {
 
 
 const getStoredStationCenter = () => {
+    const defaultCenter = {
+        name: 'NO CENTER SELECTED',
+        bikesAvailable: 0,
+        spacesAvailable: 0,
+        stationId: null
+    }
     try {
         const storedStation = window.localStorage.getItem('centerStation')
         if (storedStation) return JSON.parse(storedStation)
-        return undefined
+        return defaultCenter
     } catch (error) {
-        return undefined
+        return defaultCenter
     }
 }
+
+const CenterSation = ({ center }) => {
+    const {
+        name,
+        bikesAvailable,
+        spacesAvailable,
+    } = center
+
+    const totalSpace = bikesAvailable + spacesAvailable
+    const bikes = `${bikesAvailable} / ${totalSpace}`
+
+    let bikeSituation = 'bad'
+    if (bikesAvailable > 3) bikeSituation = 'good'
+    else if (bikesAvailable > 0) bikeSituation = 'neutral'
+
+    return (
+        <table id='center-table' className={bikeSituation}>
+            <thead>
+                <tr key={1} >
+                    <th>
+                        {'NAME'}
+                    </th>
+                    <th>
+                        {'BIKES/SPACE'}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {name}
+                    </td>
+                    <td>
+                        {bikes}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    )
+}
+
 
 const SituationScreen = () => {
     const [bikeData, setBikeData] = useState({ lastFetchTime: 0, stations: [] })
     const [center, setCenter] = useState(() => getStoredStationCenter())
-    const [showStationList, setShowStationList] = useState((!center ? true : false))
+    const [showStationList, setShowStationList] = useState((!center.stationId ? true : false))
 
     /**
      * @type { { lastFetchTime: Number, stations: Array<bikeStation> } }
@@ -68,19 +115,34 @@ const SituationScreen = () => {
         const updateTicker = setInterval(() => {
             updateBikeData(setBikeData)
         }, 10 * 1000)
-        return () => {console.log('ceä'); clearTimeout(updateTicker)}
+        return () => { clearTimeout(updateTicker) }
     }, [])
 
+    const centerData = stations.find(s => s.stationId === center.stationId) || center
+
+    const timeString = new Date(lastFetchTime || center.lastFetchTime).toLocaleString()
+
+    const btnText = (showStationList) ? 'HIDE LIST' : 'CHANGE STATION'
 
     return (
         <div id='station-screen'>
-            {center.name}
+            <div id='center-screen'>
+                <h2>YOUR STATION</h2>
+                <CenterSation center={centerData} />
+                <br></br>
+                {timeString}
+            </div>
             <br></br>
 
-            <button onClick={() => setShowStationList(state => !state)}>CHANGE STATION</button>
+            <button onClick={() => setShowStationList(state => !state)}>{btnText}</button>
             <br></br>
-            { showStationList && <StationList center={center} setCenter={setCenter} stations={stations} />}
 
+            { showStationList && <StationList
+                centerId={center.stationId}
+                setCenter={setCenter}
+                stations={stations}
+                lastFetchTime={lastFetchTime}
+            />}
         </div >
     )
 }

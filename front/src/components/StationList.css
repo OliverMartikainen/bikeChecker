@@ -1,0 +1,22 @@
+#station-list-table {
+    text-align: left;
+    background-color: rgb(153, 153, 153);
+    width: 100%;
+    border-radius: 10px;
+}
+
+.station-list-item > td {
+    pointer-events: visible;
+    border-top: 2px rgba(255, 255, 255, 0.432) solid;
+}
+
+.station-list-item.center {
+    background-color: rgba(0, 0, 0, 0.164);
+    font-weight: 700;
+}
+
+.status-marker {
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+}
