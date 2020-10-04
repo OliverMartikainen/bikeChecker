@@ -17,7 +17,7 @@ app.use(middleware.errorHandler)
 
 app.use(express.static('build'))
 
-app.use('/api/bikeData', bikeDataRouter)
+app.use('/api/v1/bikeData', bikeDataRouter)
 
 app.use(middleware.unknownEndpoint)
 

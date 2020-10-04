@@ -1,7 +1,7 @@
 import config from 'utils/config'
 import axios from 'axios'
 
-const URI = `${config.BIKE_API_URI}/bikeData`
+const URI = `${config.BIKE_API_URI}/v1/bikeData`
 
 /* prevent client from spamming updates --> server BIKE_DATA updates every 1 min */
 let LAST_FETCH_TIME = 0
