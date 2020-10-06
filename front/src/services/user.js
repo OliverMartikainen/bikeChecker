@@ -4,6 +4,7 @@ import tokenManager from 'utils/tokenManager'
 
 const CREATE_URI = `${config.LOGIN_API_URI}/api/users`
 const LOGIN_URI = `${config.LOGIN_API_URI}/api/login`
+const HOMESTATION_URI = `${config.LOGIN_API_URI}/api/storeStation`
 
 
 const login = async (username, password) => {
@@ -12,7 +13,7 @@ const login = async (username, password) => {
     
         if(response.status !== 201 || !response.data ) {
             console.log('LOGIN: FAILED', response.status)
-            return false
+            return { isLoggedIn: false }
         }
     
         console.log('LOGIN DONE')
@@ -24,10 +25,10 @@ const login = async (username, password) => {
 
         if(response.data.token !== '') window.localStorage.setItem('userToken', response.data.token)
 
-        return true
+        return { isLoggedIn: true, homeStation: response.data.homeStation}
     } catch (error) {
-        console.error('LOGIN: FAILED',error.status)
-        return false
+        console.error('LOGIN: FAILED',error.message)
+        return { isLoggedIn: false }
     }
 }
 
@@ -54,13 +55,28 @@ const createUser = async (username, password) => {
 
         return { bCreated: true, message: 'USER CREATED'}
     } catch (error) {
-        console.error(error)
+        console.error(error.message)
         return { bCreated: false, message: 'USERNAME IN USE' }
+    }
+}
+
+const storeHomeStation = async (homeStation) => {
+    try {
+        const data = {
+            station: homeStation
+        }
+        console.log(data)
+        const AuthorizationHeader = tokenManager.getAuthHeader()
+        const response = await axios.post(HOMESTATION_URI, data, AuthorizationHeader)
+
+    } catch (error) {
+        console.error(error.message)
     }
 }
 
 
 export default {
     login,
-    createUser
+    createUser,
+    storeHomeStation
 }

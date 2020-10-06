@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './StationList.css'
+import userService from 'services/user'
 
 /**
  * @typedef {import('services/bikeData').bikeStation } bikeStation
@@ -64,6 +65,8 @@ const StationList = ({ centerId, setCenter, stations, lastFetchTime }) => {
             ...station
         }
         window.localStorage.setItem('centerStation', JSON.stringify(storedStation))
+        //try to store to database --> dont wait for response. If it fails, it fails.
+        userService.storeHomeStation(storedStation)
         setCenter(storedStation)
     }
 
