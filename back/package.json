@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "watch": "cross-env NODE_ENV=development nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -rf build && cd ../front/ && npm run build --prod && cp -r build ../back/"
+    "build:ui": "rm -rf build && cd ../front/ && npm run build --prod && cp -r build ../back/",
+    "watch:test": "cross-env NODE_ENV=development nodemon testApp.js"
   },
   "author": "Oliver Martikainen",
   "license": "ISC",
