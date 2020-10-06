@@ -2,6 +2,6 @@ POST https://safe-retreat-57854.herokuapp.com/api/login
 Content-Type: application/json
 
 {
-    "username": "asdasd",
-    "password": "asd"
+    "username": "",
+    "password": ""
 }
