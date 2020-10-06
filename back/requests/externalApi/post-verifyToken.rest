@@ -1,6 +1,0 @@
-POST https://safe-retreat-57854.herokuapp.com/api/verifyToken
-Content-Type: application/json
-
-{
-    "token": ""
-}
