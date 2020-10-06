@@ -7,6 +7,8 @@ const URI = `${config.BIKE_API_URI}/v1/bikeData`
 /* prevent client from spamming updates --> server BIKE_DATA updates every 1 min */
 let LAST_FETCH_TIME = 0
 
+const resetLastFetchTime = () => LAST_FETCH_TIME = 0
+
 /**
  * @typedef {{
     name: String, //station name
@@ -55,5 +57,6 @@ const getBikeData = async () => {
 
 
 export default {
-    getBikeData
+    getBikeData,
+    resetLastFetchTime
 }

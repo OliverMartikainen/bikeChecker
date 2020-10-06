@@ -115,7 +115,10 @@ const SituationScreen = () => {
         const updateTicker = setInterval(() => {
             updateBikeData(setBikeData)
         }, 10 * 1000)
-        return () => { clearTimeout(updateTicker) }
+        return () => { 
+            bikeDataService.resetLastFetchTime()
+            clearTimeout(updateTicker) 
+        }
     }, [])
 
     const centerData = stations.find(s => s.stationId === center.stationId) || center
