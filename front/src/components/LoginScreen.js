@@ -9,7 +9,7 @@ const LoginScreen = ({ setUser }) => {
     const [errorMessage, setErrorMessage] = useState('')
 
 
-    const userSubmitHandler = async (event) => {
+    const userLoginHandler = async (event) => {
         event.preventDefault()
         if (username === '' || password === '') {
             console.log('MISSIN USERNAME OR PASSWORD')
@@ -49,7 +49,7 @@ const LoginScreen = ({ setUser }) => {
 
     return (
         <div id='login-screen'>
-            <form onSubmit={userSubmitHandler}>
+            <form onSubmit={userLoginHandler}>
                 USERNAME: <input
                     onChange={(event) => setUsername(event.target.value)}
                     value={username}
@@ -72,7 +72,6 @@ const LoginScreen = ({ setUser }) => {
                 <br></br>
                 {errorMessage}<br></br>
             </form>
-            
         </div>
     )
 }
