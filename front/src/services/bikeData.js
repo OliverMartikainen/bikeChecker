@@ -1,5 +1,6 @@
 import config from 'utils/config'
 import axios from 'axios'
+import tokenManager from 'utils/tokenManager'
 
 const URI = `${config.BIKE_API_URI}/v1/bikeData`
 
@@ -26,19 +27,30 @@ let LAST_FETCH_TIME = 0
 const getBikeData = async () => {
     const timeNow = new Date().valueOf()
     const minuteInMsec = 60 * 1000
-    if(LAST_FETCH_TIME > timeNow - minuteInMsec) {
+    if (LAST_FETCH_TIME > timeNow - minuteInMsec) {
         return null
     }
 
-    const response = await axios.get(URI)
-    if(response.status !== 200 || !response.data || !response.data.bikeData) {
-        console.log('BIKEDATA: FETCH FAILED', response.status)
+    try {
+        const AuthorizationHeader = tokenManager.getAuthHeader()
+        
+        const response = await axios.get(URI, AuthorizationHeader)
+        if (response.status !== 200 || !response.data || !response.data.bikeData) {
+            console.log('BIKEDATA: FETCH FAILED', response.status)
+            return null
+        }
+
+        const { lastFetchTime, stations } = response.data.bikeData
+        LAST_FETCH_TIME = lastFetchTime
+        return { lastFetchTime, stations }
+    } catch (error) {
+        if(error.response) {
+            console.log('BIKEDATA: FETCH FAILED', error.response.statusText)
+        } else {
+            console.log('BIKEDATA: FETCH FAILED', error.status)
+        }
         return null
     }
-
-    const { lastFetchTime, stations } = response.data.bikeData
-    LAST_FETCH_TIME = lastFetchTime
-    return { lastFetchTime, stations }
 }
 
 

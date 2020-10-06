@@ -1,0 +1,6 @@
+POST https://safe-retreat-57854.herokuapp.com/api/verifyToken
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFzZCIsImlhdCI6MTYwMjAwNzgxNX0.6xOqFzqQVbI86jKuavR5tum25sJcYGieUM0G8nGVfzg"
+}

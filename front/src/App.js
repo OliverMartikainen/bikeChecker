@@ -3,10 +3,20 @@ import './App.css';
 
 import SituationScreen from './components/SituationScreen'
 import LoginScreen from './components/LoginScreen'
+import tokenManager from 'utils/tokenManager';
 
 const getStoredUser = () => {
   try {
-    return window.localStorage.getItem('storedUser')
+    const storedUser = window.localStorage.getItem('storedUser')
+    const storedToken = window.localStorage.getItem('userToken')
+    if(!storedUser || !storedToken) {
+      window.localStorage.clear()
+      return null
+    }
+
+    tokenManager.setToken(storedToken)
+
+    return storedUser
   } catch (error) {
     return null
   }

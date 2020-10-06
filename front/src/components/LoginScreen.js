@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import userService from 'services/user'
 
 import './LoginScreen.css'
@@ -28,6 +28,25 @@ const LoginScreen = ({ setUser }) => {
         }
     }
 
+    const userCreateHandler = async (event) => {
+        event.preventDefault()
+        if (username === '' || password === '') {
+            console.log('MISSIN USERNAME OR PASSWORD')
+            setErrorMessage('MISSIN USERNAME OR PASSWORD')
+            setTimeout(() => {setErrorMessage('')}, 5000)
+            return
+        }
+        const { bCreated, message } = await userService.createUser(username, password)
+        if (bCreated) {
+            window.localStorage.setItem('storedUser', username)
+            setUser(username)
+        } else {
+            console.log('LOGIN FAILED')
+            setErrorMessage(message)
+            setTimeout(() => {setErrorMessage('')}, 5000)
+        }
+    }
+
     return (
         <div id='login-screen'>
             <form onSubmit={userSubmitHandler}>
@@ -47,7 +66,8 @@ const LoginScreen = ({ setUser }) => {
                 
                 <br></br>
 
-                <button type='submit'>LOGIN</button>
+                <button type='submit' >LOGIN USER</button>
+                <button type='button' onClick={userCreateHandler}>CREATE USER</button>
                 <br></br>
                 <br></br>
                 {errorMessage}<br></br>
