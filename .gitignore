@@ -132,3 +132,6 @@ yarn-debug.log*
 yarn-error.log*
 *.csv
 back/testApp.js
+*.rest
+back/requests/externalApi/post-login.rest
+back/requests/externalApi/post-verifyToken.rest
