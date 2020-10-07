@@ -8,16 +8,9 @@ import './LoginScreen.css'
  */
 
  const homeStationKeys = [
-     'id',
-     'user_id',
      'name', 
-     'bikes_available',
-     'spaces_available',
-     'realtime',
      'lat',
      'lon',
-     'allow_drop_off',
-     'last_fetch_time',
     ]
 
 
@@ -36,34 +29,29 @@ const LoginScreen = ({ setUser }) => {
             return
         }
 
-        const { isLoggedIn, homeStation } = await userService.login(username, password)
+        const { isLoggedIn, station } = await userService.login(username, password)
         if (isLoggedIn) {
             //read homestation from database and add it to localstorage --> SituationScreen then reads from there
-            if (homeStation && homeStationKeys.every(key => homeStation[key])) {
+            console.log(homeStationKeys.every(key => station[key]))
+            if (station && homeStationKeys.every(key => station[key])) {
                 const { 
                     name, 
-                    id, 
-                    last_fetch_time, 
-                    bikes_available, 
-                    spaces_available, 
-                    realtime, 
                     lat,
                     lon,
-                    allow_drop_off
-                } = homeStation
+                } = station
                 try {
-                    const station = {
+                    const storedStation = {
                         name,
-                        stationId: id,
-                        bikesAvailable: bikes_available,
-                        spacesAvailable: spaces_available,
-                        realtime,
+                        stationId: null,
+                        bikesAvailable: null,
+                        spacesAvailable: null,
+                        realtime: null,
                         lat,
                         lon,
-                        allowDropoff: allow_drop_off,
-                        lastFetchTime: last_fetch_time
+                        allowDropoff: null,
+                        lastFetchTime: 0
                     }
-                    window.localStorage.setItem('centerStation', JSON.stringify(station))
+                    window.localStorage.setItem('centerStation', JSON.stringify(storedStation))
                 } catch (error) {
                     console.error(error)
                 }

@@ -52,7 +52,14 @@ const getStoredStationCenter = () => {
     }
     try {
         const storedStation = window.localStorage.getItem('centerStation')
-        if (storedStation) return JSON.parse(storedStation)
+        if (storedStation) {
+            const station = JSON.parse(storedStation)
+            station.lastFetchTime = 0
+            station.bikesAvailable = 0
+            station.spacesAvailable = 0
+            station.stationId = null
+            return station
+        }
         return defaultCenter
     } catch (error) {
         return defaultCenter
@@ -64,10 +71,11 @@ const CenterSation = ({ center }) => {
         name,
         bikesAvailable,
         spacesAvailable,
+        lastFetchTime,
     } = center
 
     const totalSpace = bikesAvailable + spacesAvailable
-    const bikes = `${bikesAvailable} / ${totalSpace}`
+    const bikes = (lastFetchTime !== 0) ? `${bikesAvailable} / ${totalSpace}` : '...updating'
 
     let bikeSituation = 'bad'
     if (bikesAvailable > 3) bikeSituation = 'good'
@@ -103,7 +111,7 @@ const CenterSation = ({ center }) => {
 const SituationScreen = () => {
     const [bikeData, setBikeData] = useState({ lastFetchTime: 0, stations: [] })
     const [center, setCenter] = useState(() => getStoredStationCenter())
-    const [showStationList, setShowStationList] = useState((!center.stationId ? true : false))
+    const [showStationList, setShowStationList] = useState((!center.name ? true : false))
 
     /**
      * @type { { lastFetchTime: Number, stations: Array<bikeStation> } }
@@ -121,7 +129,10 @@ const SituationScreen = () => {
         }
     }, [])
 
-    const centerData = stations.find(s => s.stationId === center.stationId) || center
+    let centerData = stations.find(s => s.stationId === center.stationId)
+    if (!centerData) {
+       centerData = stations.find(s => s.name === center.name) || center
+    } 
 
     const timeString = new Date(lastFetchTime || center.lastFetchTime).toLocaleString()
 

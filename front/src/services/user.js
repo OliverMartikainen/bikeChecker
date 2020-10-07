@@ -25,7 +25,7 @@ const login = async (username, password) => {
 
         if(response.data.token !== '') window.localStorage.setItem('userToken', response.data.token)
 
-        return { isLoggedIn: true, homeStation: response.data.homeStation}
+        return { isLoggedIn: true, station: response.data.station}
     } catch (error) {
         console.error('LOGIN: FAILED',error.message)
         return { isLoggedIn: false }
