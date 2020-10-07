@@ -67,7 +67,7 @@ const storeHomeStation = async (homeStation) => {
         }
         console.log(data)
         const AuthorizationHeader = tokenManager.getAuthHeader()
-        const response = await axios.post(HOMESTATION_URI, data, AuthorizationHeader)
+        await axios.post(HOMESTATION_URI, data, AuthorizationHeader)
 
     } catch (error) {
         console.error(error.message)
