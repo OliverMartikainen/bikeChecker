@@ -32,7 +32,6 @@ const LoginScreen = ({ setUser }) => {
         const { isLoggedIn, station } = await userService.login(username, password)
         if (isLoggedIn) {
             //read homestation from database and add it to localstorage --> SituationScreen then reads from there
-            console.log(homeStationKeys.every(key => station[key]))
             if (station && homeStationKeys.every(key => station[key])) {
                 const { 
                     name, 
