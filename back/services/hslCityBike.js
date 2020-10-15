@@ -7,7 +7,7 @@ const CITYBIKES_URI = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/g
  * @typedef {{
     name: String, //station name
     stationId: String, 
-    bikesAvailable: 8, 
+    bikesAvailable: Number, 
     spacesAvailable: Number,
     realtime: Boolean, //are bikes&spaces realtime numbers (true) or is bikesAvailable = spacesAvailable / 2 (false)
     lat: Number, //latitude
